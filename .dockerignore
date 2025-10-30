@@ -1,0 +1,84 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Notebooks
+notebooks/
+*.ipynb
+.ipynb_checkpoints/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+*.log
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Datasets and training
+datasets/
+train/
+
+# Documentation
+*.md
+LICENSE
+one-click-portable.md
+
+# Output files
+outputs/
+logs/
+uploads/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# UV lock file (will install from pyproject.toml)
+uv.lock
+
+# Scripts
+scripts/
+
+# Node.js integration examples
+nodejs-integration/
+
+# Deployment files
+deploy.sh
+setup-gcloud.sh
+test-deployment.sh
+.gcloudignore
+

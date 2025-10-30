@@ -227,3 +227,7 @@ working_dir
 data
 upload_to_huggingface.py
 resources/best.pt
+
+# Cloud Run deployment files
+.service_url
+.service_account

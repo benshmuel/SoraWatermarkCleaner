@@ -1,0 +1,86 @@
+# This file specifies files that are *not* uploaded to Google Cloud
+# using gcloud. It follows the same syntax as .gitignore, with the addition of
+# "#!include" directives (which insert the entries of the given .gitignore-style
+# file at that point).
+
+# Include .gitignore content
+#!include:.gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Notebooks
+notebooks/
+*.ipynb
+.ipynb_checkpoints/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Datasets and training
+datasets/
+train/
+
+# Output files (empty directories are fine)
+outputs/*
+logs/*
+uploads/*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# UV lock file
+uv.lock
+
+# Scripts (not needed in container)
+scripts/
+
+# Node.js integration examples
+nodejs-integration/
+
+# Keep only essentials
+!pyproject.toml
+!start_server.py
+!sorawm/
+!resources/
+
