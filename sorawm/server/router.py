@@ -3,8 +3,9 @@ from uuid import uuid4
 
 import aiofiles
 from fastapi import APIRouter, BackgroundTasks, File, HTTPException, UploadFile
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, RedirectResponse
 
+from sorawm.configs import USE_GCS
 from sorawm.server.schemas import WMRemoveResults
 from sorawm.server.worker import worker
 
@@ -53,10 +54,21 @@ async def download_video(task_id: str):
         raise HTTPException(
             status_code=400, detail=f"Task not finish yet: {result.status}"
         )
-    output_path = await worker.get_output_path(task_id)
-    if output_path is None or not output_path.exists():
-        raise HTTPException(status_code=404, detail="Output file does not exits")
-
-    return FileResponse(
-        path=output_path, filename=output_path.name, media_type="video/mp4"
-    )
+    
+    if USE_GCS:
+        # For GCS, redirect to signed URL
+        signed_url = await worker.get_download_url(task_id)
+        if signed_url is None:
+            raise HTTPException(
+                status_code=404, detail="Could not generate download URL"
+            )
+        return RedirectResponse(url=signed_url)
+    else:
+        # For local storage, serve file directly
+        output_path = await worker.get_output_path(task_id)
+        if output_path is None or not output_path.exists():
+            raise HTTPException(status_code=404, detail="Output file does not exist")
+        
+        return FileResponse(
+            path=output_path, filename=output_path.name, media_type="video/mp4"
+        )

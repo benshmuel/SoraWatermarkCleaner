@@ -151,6 +151,46 @@ Once finished, the returned data will include a **download URL**.
 
 You can use the **download URL** from step 2 to retrieve the cleaned video.
 
+### Cloud Deployment & Storage
+
+The server can be easily deployed to **Google Cloud Run** with optional **Google Cloud Storage (GCS)** integration:
+
+#### Why Use Cloud Storage?
+- ✅ **Persistent Storage**: Files survive container restarts
+- ✅ **Scalable**: No disk space limitations
+- ✅ **Multi-Instance**: Share files across multiple Cloud Run instances
+- ✅ **Cost-Effective**: Pay only for what you use
+
+#### Quick Deployment
+
+```bash
+# Deploy to Cloud Run (local storage)
+./deploy.sh
+
+# Deploy with GCS storage
+export USE_GCS=true
+export GCS_BUCKET_NAME=your-bucket-name
+./deploy.sh
+```
+
+📖 **Documentation**:
+- [Quick Start Guide](QUICKSTART.md) - Get started in 3 steps
+- [Full Deployment Guide](DEPLOYMENT.md) - Complete Cloud Run setup
+- [GCS Setup Guide](GCS_SETUP.md) - Configure Google Cloud Storage
+
+#### Node.js Integration
+
+Pre-built client library available for Node.js/Express apps:
+
+```javascript
+const { SoraWatermarkCleanerClient } = require('./nodejs-integration/sora-api-client');
+
+const client = new SoraWatermarkCleanerClient('https://your-service.run.app');
+const result = await client.removeWatermark('./video.mp4');
+```
+
+See [nodejs-integration/README.md](nodejs-integration/README.md) for details.
+
 ## 6. Datasets
 
 We have uploaded the labelled datasets into huggingface, check this out https://huggingface.co/datasets/LLinked/sora-watermark-dataset. Free free to train your custom detector model or improve our model!

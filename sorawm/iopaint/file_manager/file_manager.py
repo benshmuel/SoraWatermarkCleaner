@@ -11,16 +11,26 @@ from ..schema import MediasResponse, MediaTab
 
 LARGE_ENOUGH_NUMBER = 100
 PngImagePlugin.MAX_TEXT_CHUNK = LARGE_ENOUGH_NUMBER * (1024**2)
-from .storage_backends import FilesystemStorageBackend
+from .storage_backends import FilesystemStorageBackend, BaseStorageBackend
 from .utils import aspect_to_string, generate_filename, glob_img
 
 
 class FileManager:
-    def __init__(self, app: FastAPI, input_dir: Path, mask_dir: Path, output_dir: Path):
+    def __init__(
+        self,
+        app: FastAPI,
+        input_dir: Path,
+        mask_dir: Path,
+        output_dir: Path,
+        storage_backend: BaseStorageBackend = None,
+    ):
         self.app = app
         self.input_dir: Path = input_dir
         self.mask_dir: Path = mask_dir
         self.output_dir: Path = output_dir
+        
+        # Use provided storage backend or default to filesystem
+        self.storage_backend = storage_backend or FilesystemStorageBackend(app)
 
         self.image_dir_filenames = []
         self.output_dir_filenames = []
@@ -103,7 +113,7 @@ class FileManager:
         self, directory: Path, original_filename: str, width, height, **options
     ):
         directory = Path(directory)
-        storage = FilesystemStorageBackend(self.app)
+        storage = self.storage_backend
         crop = options.get("crop", "fit")
         background = options.get("background")
         quality = options.get("quality", 90)

@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 ROOT = Path(__file__).parent.parent
@@ -25,3 +26,12 @@ DATA_PATH = ROOT / "data"
 DATA_PATH.mkdir(exist_ok=True, parents=True)
 
 SQLITE_PATH = DATA_PATH / "db.sqlite3"
+
+# Google Cloud Storage Configuration
+USE_GCS = os.getenv("USE_GCS", "false").lower() == "true"
+GCS_BUCKET_NAME = os.getenv("GCS_BUCKET_NAME", None)
+GCS_PROJECT_ID = os.getenv("GCS_PROJECT_ID", None)
+
+# Storage paths in GCS (if enabled)
+GCS_UPLOADS_PREFIX = os.getenv("GCS_UPLOADS_PREFIX", "uploads")
+GCS_OUTPUTS_PREFIX = os.getenv("GCS_OUTPUTS_PREFIX", "outputs")
